@@ -28,3 +28,7 @@ Aurora is a premium AI-powered web app designed to revolutionize the blood donat
 - React Hook Form
 - Various other modern React libraries
 
+## Acknowledgments
+
+- Medical data guidelines from WHO, Stanford University's Blog
+- Open-source community and contributors
