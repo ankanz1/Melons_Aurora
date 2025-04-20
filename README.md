@@ -27,7 +27,7 @@ pnpm install
 pnpm dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+4.  [OPEN]([http://localhost:3000](https://v0-aurora-app-design.vercel.app)) in your browser
 
 ## Tech Stack
 
@@ -38,6 +38,3 @@ pnpm dev
 - React Hook Form
 - Various other modern React libraries
 
-## License
-
-MIT 
