@@ -1,33 +1,23 @@
-# My Melons
+# AURORA
 
-A modern Next.js application built with TypeScript and Tailwind CSS.
+Aurora is a premium AI-powered web app designed to revolutionize the blood donation landscape. It connects donors, blood banks, hospitals, and communities through intelligent features like:
 
-## Features
+📍 Nearby Camp Locator using Leaflet.js
 
-- Next.js 15
-- TypeScript
-- Tailwind CSS
-- Modern UI components
-- Responsive design
+🧬 AI-based Early Blood Cancer Risk Detection
 
-## Getting Started
+🧑‍🤝‍🧑 Donor Registration, Appointment Booking & Matching System
 
-1. Clone the repository
-```bash
-git clone https://github.com/yourusername/mymelons.git
-```
+🏥 Live Blood Stock & Hospital Requests
 
-2. Install dependencies
-```bash
-pnpm install
-```
+🏕️ Camp Hosting for Clubs/Organizations with Marketing Tools
 
-3. Run the development server
-```bash
-pnpm dev
-```
+🔔 Real-time Alerts, Reminders & Notifications
 
-4.  [OPEN]([http://localhost:3000](https://v0-aurora-app-design.vercel.app)) in your browser
+🔐 Secure Admin Panel with Role-based Access
+
+
+  [OPEN]([https://v0-aurora-app-design.vercel.app](https://v0-aurora-app-design.vercel.app) in your browser
 
 ## Tech Stack
 
