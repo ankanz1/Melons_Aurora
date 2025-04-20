@@ -1,4 +1,4 @@
-# AURORA
+# AURORA - AI-powered Blood Cancer Detection & Donation Platform
 
 Aurora is a premium AI-powered web app designed to revolutionize the blood donation landscape. It connects donors, blood banks, hospitals, and communities through intelligent features like:
 
