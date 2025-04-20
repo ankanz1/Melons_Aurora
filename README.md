@@ -17,7 +17,7 @@ Aurora is a premium AI-powered web app designed to revolutionize the blood donat
 🔐 Secure Admin Panel with Role-based Access
 
 
-  Open this [web](https://v0-aurora-app-design.vercel.app) in your browser
+  Open this ["web"](https://v0-aurora-app-design.vercel.app) in your browser 💻 
 
 ## Tech Stack
 
