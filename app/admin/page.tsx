@@ -34,8 +34,8 @@ import { cn } from "@/lib/utils"
 const users = [
   {
     id: 1,
-    name: "John Doe",
-    email: "john@example.com",
+    name: "Name",
+    email: "your@name.com",
     role: "Donor",
     bloodType: "O+",
     lastDonation: "2025-04-15",
@@ -43,18 +43,18 @@ const users = [
   },
   {
     id: 2,
-    name: "Jane Smith",
-    email: "jane@example.com",
+    name: "Name",
+    email: "your@name.com",
     role: "Recipient",
     bloodType: "AB-",
     lastRequest: "2025-05-01",
     status: "Active",
   },
-  { id: 3, name: "Robert Johnson", email: "robert@example.com", role: "Admin", status: "Active" },
+  { id: 3, name: "Name", email: "your@name.com", role: "Admin", status: "Active" },
   {
     id: 4,
-    name: "Emily Davis",
-    email: "emily@example.com",
+    name: "Name",
+    email: "your@name.com",
     role: "Donor",
     bloodType: "A+",
     lastDonation: "2025-03-22",
@@ -62,8 +62,8 @@ const users = [
   },
   {
     id: 5,
-    name: "Michael Wilson",
-    email: "michael@example.com",
+    name: "Name",
+    email: "your@name.com",
     role: "Hospital Staff",
     hospital: "City General",
     status: "Active",
@@ -74,7 +74,7 @@ const users = [
 const donations = [
   {
     id: 1,
-    donor: "John Doe",
+    donor: "Your Name",
     bloodType: "O+",
     date: "2025-04-15",
     location: "City General Hospital",
@@ -82,7 +82,7 @@ const donations = [
   },
   {
     id: 2,
-    name: "Emily Davis",
+    name: "Name",
     bloodType: "A+",
     date: "2025-03-22",
     location: "Memorial Blood Center",
@@ -90,7 +90,7 @@ const donations = [
   },
   {
     id: 3,
-    name: "Sarah Johnson",
+    name: "Name",
     bloodType: "B-",
     date: "2025-05-05",
     location: "University Medical Center",
@@ -98,7 +98,7 @@ const donations = [
   },
   {
     id: 4,
-    name: "David Miller",
+    name: "Name",
     bloodType: "AB+",
     date: "2025-05-10",
     location: "Community Center Blood Drive",
@@ -106,7 +106,7 @@ const donations = [
   },
   {
     id: 5,
-    name: "Lisa Brown",
+    name: "Name",
     bloodType: "O-",
     date: "2025-04-28",
     location: "Mobile Blood Drive",
@@ -118,7 +118,7 @@ const donations = [
 const requests = [
   {
     id: 1,
-    patient: "Jane Smith",
+    patient: "Name",
     bloodType: "AB-",
     date: "2025-05-01",
     hospital: "Memorial Hospital",
@@ -127,7 +127,7 @@ const requests = [
   },
   {
     id: 2,
-    patient: "Thomas Anderson",
+    patient: "Name",
     bloodType: "O+",
     date: "2025-04-29",
     hospital: "City General Hospital",
@@ -136,7 +136,7 @@ const requests = [
   },
   {
     id: 3,
-    patient: "Maria Garcia",
+    patient: "Name",
     bloodType: "B+",
     date: "2025-05-07",
     hospital: "University Medical Center",
@@ -145,7 +145,7 @@ const requests = [
   },
   {
     id: 4,
-    patient: "James Wilson",
+    patient: "Name",
     bloodType: "A-",
     date: "2025-05-12",
     hospital: "Children's Hospital",
@@ -154,7 +154,7 @@ const requests = [
   },
   {
     id: 5,
-    patient: "Patricia Moore",
+    patient: "Name",
     bloodType: "O-",
     date: "2025-04-25",
     hospital: "Veterans Hospital",

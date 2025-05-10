@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils"
 const bloodRequests = [
   {
     id: 1,
-    patientName: "John Doe",
+    patientName: "Name",
     bloodType: "O-",
     hospital: "City General Hospital",
     location: "Downtown",
@@ -32,7 +32,7 @@ const bloodRequests = [
   },
   {
     id: 2,
-    patientName: "Jane Smith",
+    patientName: "Name",
     bloodType: "AB+",
     hospital: "Memorial Hospital",
     location: "Midtown",
@@ -45,7 +45,7 @@ const bloodRequests = [
   },
   {
     id: 3,
-    patientName: "Robert Johnson",
+    patientName: "Name",
     bloodType: "B+",
     hospital: "University Medical Center",
     location: "University District",
