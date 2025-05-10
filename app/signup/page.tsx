@@ -97,7 +97,7 @@ export default function SignupPage() {
                   <Input
                     id="name"
                     name="name"
-                    placeholder="John Doe"
+                    placeholder="Your Name"
                     className="pl-10"
                     value={signupData.name}
                     onChange={handleInputChange}

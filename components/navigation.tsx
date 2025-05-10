@@ -56,8 +56,8 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [userInfo, setUserInfo] = useState({
-    name: "John Doe",
-    email: "john@example.com",
+    name: "Your Name",
+    email: "your@name.com",
     bloodType: "O+",
     lastDonation: "2025-04-15",
     donationCount: 5,

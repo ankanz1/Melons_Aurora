@@ -13,9 +13,9 @@ const fontSans = FontSans({
 })
 
 export const metadata: Metadata = {
-  title: "Aurora | AI-powered Health Platform",
+  title: "Aurora",
   description: "AI-powered blood cancer detection and smart blood donation network",
-    generator: 'v0.dev'
+    generator: 'Ankz'
 }
 
 export default function RootLayout({
