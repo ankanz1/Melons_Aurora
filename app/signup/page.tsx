@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,7 +13,7 @@ import { Eye, EyeOff, Mail, Lock, User } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import { Loading } from "@/components/ui/loading"
 
-export default function SignupPage() {
+function SignupForm() {
   const { toast } = useToast()
   const { signUp, error: authError } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
@@ -249,5 +249,13 @@ export default function SignupPage() {
         </Card>
       </div>
     </div>
+  )
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><Loading /></div>}>
+      <SignupForm />
+    </Suspense>
   )
 }

@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -12,10 +11,9 @@ import { useToast } from "@/components/ui/use-toast"
 import { Eye, EyeOff, Mail, Lock } from "lucide-react"
 import { Loading } from "@/components/ui/loading"
 import { useAuth } from "@/contexts/auth-context"
+import { Suspense } from "react"
 
-export default function LoginPage() {
-  const searchParams = useSearchParams()
-  const message = searchParams.get("message")
+function LoginForm({ message }: { message?: string }) {
   const { signIn, error: authError } = useAuth()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
@@ -195,5 +193,17 @@ export default function LoginPage() {
         </Card>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams: { message?: string }
+}) {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><Loading /></div>}>
+      <LoginForm message={searchParams.message} />
+    </Suspense>
   )
 }
