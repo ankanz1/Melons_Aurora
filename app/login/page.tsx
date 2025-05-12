@@ -1,9 +1,8 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -11,9 +10,15 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/components/ui/use-toast"
 import { Eye, EyeOff, Mail, Lock } from "lucide-react"
+import { Loading } from "@/components/ui/loading"
+import { useAuth } from "@/contexts/auth-context"
 
 export default function LoginPage() {
+  const searchParams = useSearchParams()
+  const message = searchParams.get("message")
+  const { signIn, error: authError } = useAuth()
   const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [loginData, setLoginData] = useState({
     email: "",
@@ -21,18 +26,28 @@ export default function LoginPage() {
     rememberMe: false,
   })
 
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Login data:", loginData)
-    toast({
-      title: "Login Successful",
-      description: "You have been logged in successfully.",
-    })
+    try {
+      setIsLoading(true)
+      await signIn(loginData.email, loginData.password)
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to sign in",
+        variant: "destructive",
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setLoginData((prev) => ({ ...prev, [name]: value }))
+    const { name, value, checked } = e.target
+    setLoginData((prev) => ({
+      ...prev,
+      [name]: name === "rememberMe" ? checked : value,
+    }))
   }
 
   const togglePasswordVisibility = () => {
@@ -58,7 +73,14 @@ export default function LoginPage() {
             <CardTitle className="text-2xl font-bold text-center">Welcome back</CardTitle>
             <CardDescription className="text-center">Enter your credentials to access your account</CardDescription>
           </CardHeader>
+          
           <CardContent>
+            {message && (
+              <div className="mb-4 p-3 text-sm text-green-500 bg-green-500/10 rounded-md">
+                {message}
+              </div>
+            )}
+            
             <form onSubmit={handleLoginSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
@@ -73,16 +95,13 @@ export default function LoginPage() {
                     value={loginData.email}
                     onChange={handleInputChange}
                     required
+                    disabled={isLoading}
                   />
                 </div>
               </div>
+              
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Password</Label>
-                  <Link href="/forgot-password" className="text-xs text-primary hover:underline">
-                    Forgot password?
-                  </Link>
-                </div>
+                <Label htmlFor="password">Password</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -94,6 +113,7 @@ export default function LoginPage() {
                     value={loginData.password}
                     onChange={handleInputChange}
                     required
+                    disabled={isLoading}
                   />
                   <Button
                     type="button"
@@ -101,6 +121,7 @@ export default function LoginPage() {
                     size="icon"
                     className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={togglePasswordVisibility}
+                    disabled={isLoading}
                   >
                     {showPassword ? (
                       <EyeOff className="h-4 w-4 text-muted-foreground" />
@@ -111,26 +132,63 @@ export default function LoginPage() {
                   </Button>
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="rememberMe"
-                  checked={loginData.rememberMe}
-                  onCheckedChange={(checked) => setLoginData((prev) => ({ ...prev, rememberMe: !!checked }))}
-                />
-                <Label htmlFor="rememberMe" className="text-sm">
-                  Remember me for 30 days
-                </Label>
+              
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="rememberMe"
+                    name="rememberMe"
+                    checked={loginData.rememberMe}
+                    onCheckedChange={(checked) => setLoginData((prev) => ({ ...prev, rememberMe: !!checked }))}
+                    disabled={isLoading}
+                  />
+                  <Label
+                    htmlFor="rememberMe"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Remember me
+                  </Label>
+                </div>
+                
+                <Link
+                  href="/forgot-password"
+                  className="text-sm text-primary hover:underline"
+                >
+                  Forgot password?
+                </Link>
               </div>
-              <Button type="submit" className="w-full">
-                Sign In
+              
+              {authError && (
+                <div className="text-sm text-red-500 text-center">
+                  {authError}
+                </div>
+              )}
+              
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <Loading size="sm" />
+                    <span>Signing in...</span>
+                  </div>
+                ) : (
+                  "Sign in"
+                )}
               </Button>
             </form>
           </CardContent>
+          
           <CardFooter className="flex flex-col">
             <div className="mt-2 text-center text-sm">
-              Don't have an account?{" "}
-              <Link href="/signup" className="text-primary hover:underline">
-                Sign up
+              Don&apos;t have an account?{" "}
+              <Link
+                href="/signup"
+                className="text-primary hover:underline"
+              >
+                Create an account
               </Link>
             </div>
           </CardFooter>
