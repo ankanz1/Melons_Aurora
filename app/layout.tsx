@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import { Navigation } from "@/components/navigation"
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from "@/contexts/auth-context"
+import { ChatButton } from "@/components/chat-button"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
               <Navigation />
               <main className="flex-1">{children}</main>
               <Toaster />
+              <ChatButton />
             </div>
           </AuthProvider>
         </ThemeProvider>
