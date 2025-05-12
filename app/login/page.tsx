@@ -12,8 +12,9 @@ import { useToast } from "@/components/ui/use-toast"
 import { Eye, EyeOff, Mail, Lock } from "lucide-react"
 import { Loading } from "@/components/ui/loading"
 import { useAuth } from "@/contexts/auth-context"
+import { Suspense } from "react"
 
-export default function LoginPage() {
+function LoginForm() {
   const searchParams = useSearchParams()
   const message = searchParams.get("message")
   const { signIn, error: authError } = useAuth()
@@ -195,5 +196,13 @@ export default function LoginPage() {
         </Card>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><Loading /></div>}>
+      <LoginForm />
+    </Suspense>
   )
 }
