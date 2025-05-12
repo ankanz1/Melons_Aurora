@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -11,10 +10,14 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/components/ui/use-toast"
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react"
+import { useAuth } from "@/contexts/auth-context"
+import { Loading } from "@/components/ui/loading"
 
 export default function SignupPage() {
   const { toast } = useToast()
+  const { signUp, error: authError } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [signupData, setSignupData] = useState({
     name: "",
     email: "",
@@ -27,7 +30,7 @@ export default function SignupPage() {
     confirmPassword: "",
   })
 
-  const handleSignupSubmit = (e: React.FormEvent) => {
+  const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     // Validate password match
@@ -48,11 +51,22 @@ export default function SignupPage() {
       return
     }
 
-    console.log("Signup data:", signupData)
-    toast({
-      title: "Account Created",
-      description: "Your account has been created successfully.",
-    })
+    try {
+      setIsLoading(true)
+      await signUp(signupData.email, signupData.password)
+      toast({
+        title: "Account Created",
+        description: "Please check your email to confirm your account.",
+      })
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to create account",
+        variant: "destructive",
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -119,6 +133,7 @@ export default function SignupPage() {
                     value={signupData.email}
                     onChange={handleInputChange}
                     required
+                    disabled={isLoading}
                   />
                 </div>
               </div>
@@ -136,6 +151,7 @@ export default function SignupPage() {
                     value={signupData.password}
                     onChange={handleInputChange}
                     required
+                    disabled={isLoading}
                   />
                   <Button
                     type="button"
@@ -143,6 +159,7 @@ export default function SignupPage() {
                     size="icon"
                     className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={togglePasswordVisibility}
+                    disabled={isLoading}
                   >
                     {showPassword ? (
                       <EyeOff className="h-4 w-4 text-muted-foreground" />
@@ -169,6 +186,7 @@ export default function SignupPage() {
                     value={signupData.confirmPassword}
                     onChange={handleInputChange}
                     required
+                    disabled={isLoading}
                   />
                 </div>
                 {errors.confirmPassword && <p className="text-xs text-red-500 mt-1">{errors.confirmPassword}</p>}
@@ -180,6 +198,7 @@ export default function SignupPage() {
                   checked={signupData.agreeTerms}
                   onCheckedChange={(checked) => setSignupData((prev) => ({ ...prev, agreeTerms: !!checked }))}
                   required
+                  disabled={isLoading}
                 />
                 <div className="grid gap-1.5 leading-none">
                   <Label
@@ -201,8 +220,21 @@ export default function SignupPage() {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full" disabled={!signupData.agreeTerms}>
-                Create Account
+              {authError && (
+                <div className="text-sm text-red-500 text-center">
+                  {authError}
+                </div>
+              )}
+
+              <Button type="submit" className="w-full" disabled={!signupData.agreeTerms || isLoading}>
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <Loading size="sm" />
+                    <span>Creating account...</span>
+                  </div>
+                ) : (
+                  "Create Account"
+                )}
               </Button>
             </form>
           </CardContent>

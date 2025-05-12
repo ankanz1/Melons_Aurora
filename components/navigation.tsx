@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/mode-toggle"
@@ -39,6 +39,7 @@ import {
   DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
+import { useAuth } from "@/contexts/auth-context"
 
 const navItems = [
   { name: "Home", href: "/", icon: Home },
@@ -53,16 +54,10 @@ const navItems = [
 
 export function Navigation() {
   const pathname = usePathname()
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [userInfo, setUserInfo] = useState({
-    name: "Your Name",
-    email: "your@name.com",
-    bloodType: "O+",
-    lastDonation: "2025-04-15",
-    donationCount: 5,
-    isLoggedIn: true,
-  })
+  const { user, signOut } = useAuth()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,6 +67,15 @@ export function Navigation() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  const handleSignOut = async () => {
+    try {
+      await signOut()
+      router.push("/login")
+    } catch (error) {
+      console.error("Error signing out:", error)
+    }
+  }
 
   return (
     <header
@@ -155,25 +159,25 @@ export function Navigation() {
 
           <ModeToggle />
 
-          {userInfo.isLoggedIn ? (
+          {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full h-8 w-8 ml-1">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt={userInfo.name} />
-                    <AvatarFallback>{userInfo.name.charAt(0)}</AvatarFallback>
+                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt={user.email || "User"} />
+                    <AvatarFallback>{user.email?.charAt(0).toUpperCase() || "U"}</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <div className="flex items-center justify-start gap-2 p-2">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt={userInfo.name} />
-                    <AvatarFallback>{userInfo.name.charAt(0)}</AvatarFallback>
+                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt={user.email || "User"} />
+                    <AvatarFallback>{user.email?.charAt(0).toUpperCase() || "U"}</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col space-y-0.5">
-                    <p className="text-sm font-medium">{userInfo.name}</p>
-                    <p className="text-xs text-muted-foreground">{userInfo.email}</p>
+                    <p className="text-sm font-medium">{user.email}</p>
+                    <p className="text-xs text-muted-foreground">Member</p>
                   </div>
                 </div>
                 <DropdownMenuSeparator />
@@ -185,7 +189,6 @@ export function Navigation() {
                   <DropdownMenuItem>
                     <History className="mr-2 h-4 w-4" />
                     <span>Donation History</span>
-                    <Badge className="ml-auto bg-primary">{userInfo.donationCount}</Badge>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Calendar className="mr-2 h-4 w-4" />
@@ -194,43 +197,13 @@ export function Navigation() {
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <Heart className="mr-2 h-4 w-4" />
-                      <span>Blood Type</span>
-                      <Badge variant="outline" className="ml-auto">
-                        {userInfo.bloodType}
-                      </Badge>
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent>
-                        <div className="p-2">
-                          <h4 className="mb-2 text-sm font-medium">Compatible With:</h4>
-                          <div className="grid grid-cols-2 gap-1">
-                            <Badge variant="outline" className="justify-center">
-                              A+
-                            </Badge>
-                            <Badge variant="outline" className="justify-center">
-                              A-
-                            </Badge>
-                            <Badge variant="outline" className="justify-center">
-                              O+
-                            </Badge>
-                            <Badge variant="outline" className="justify-center">
-                              O-
-                            </Badge>
-                          </div>
-                        </div>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
                   <DropdownMenuItem>
                     <Settings className="mr-2 h-4 w-4" />
                     <span>Settings</span>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-red-500">
+                <DropdownMenuItem className="text-red-500" onClick={handleSignOut}>
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>
                 </DropdownMenuItem>

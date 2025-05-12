@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -29,6 +29,7 @@ import {
   XCircle,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Loading, LoadingDots, LoadingOverlay } from "@/components/ui/loading"
 
 // Mock data for users
 const users = [
@@ -74,7 +75,7 @@ const users = [
 const donations = [
   {
     id: 1,
-    donor: "Your Name",
+    donor: "Name",
     bloodType: "O+",
     date: "2025-04-15",
     location: "City General Hospital",
@@ -180,6 +181,16 @@ export default function AdminPage() {
   const [filteredUsers, setFilteredUsers] = useState(users);
   const [filteredDonations, setFilteredDonations] = useState(donations);
   const [filteredRequests, setFilteredRequests] = useState(requests);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate data loading
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.toLowerCase();
@@ -210,6 +221,24 @@ export default function AdminPage() {
     setFilteredDonations(filteredDonations);
     setFilteredRequests(filteredRequests);
   };
+
+  if (isLoading) {
+    return (
+      <div className="container py-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
+            <p className="text-muted-foreground">
+              Loading dashboard data...
+            </p>
+          </div>
+          <div className="flex justify-center items-center min-h-[400px]">
+            <Loading size="lg" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container py-10">
