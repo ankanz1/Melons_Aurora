@@ -7,10 +7,12 @@ import { FeedbackSection } from "@/components/feedback-section"
 export default function Home() {
   return (
     <div className="flex flex-col min-h-[calc(100vh-4rem)]">
+      {/* Full Screen Grid Pattern */}
+      <div className="fixed inset-0 bg-grid-pattern-light dark:bg-grid-pattern-dark opacity-10 pointer-events-none" />
+
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-cyan-400/10 dark:from-purple-500/5 dark:to-cyan-400/5" />
-        <div className="absolute inset-0 bg-grid-pattern-light dark:bg-grid-pattern-dark opacity-10" />
 
         <div className="container relative z-10 flex flex-col items-center text-center">
           <div className="relative w-24 h-24 mb-8">
