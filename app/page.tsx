@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ArrowRight, Activity, Droplet, Shield, Calendar, Building, FileText } from "lucide-react"
+import { FeedbackSection } from "@/components/feedback-section"
 
 export default function Home() {
   return (
@@ -211,6 +212,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Feedback Section */}
+      <FeedbackSection />
 
       {/* Footer */}
       <footer className="py-12 bg-muted/50 border-t">
