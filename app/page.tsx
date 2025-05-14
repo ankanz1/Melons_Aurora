@@ -47,7 +47,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-muted/50">
+      <section className="py-20 bg-gradient-to-br from-purple-500/10 to-cyan-400/10 dark:from-purple-500/5 dark:to-cyan-400/5">
         <div className="container">
           <h2 className="text-3xl font-bold text-center mb-12">Revolutionizing Healthcare with AI</h2>
 
