@@ -12,7 +12,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-cyan-400/10 dark:from-purple-500/5 dark:to-cyan-400/5" />
+        <div className="absolute inset-0 w-full bg-gradient-to-br from-purple-500/10 to-cyan-400/10 dark:from-purple-500/5 dark:to-cyan-400/5" />
 
         <div className="container relative z-10 flex flex-col items-center text-center">
           <div className="relative w-24 h-24 mb-8">
@@ -47,7 +47,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-muted/50">
+      <section className="py-20 bg-gradient-to-br from-purple-500/10 to-cyan-400/10 dark:from-purple-500/5 dark:to-cyan-400/5">
         <div className="container">
           <h2 className="text-3xl font-bold text-center mb-12">Revolutionizing Healthcare with AI</h2>
 
