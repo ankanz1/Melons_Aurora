@@ -2,9 +2,12 @@
 
 
 
+---
+
 <div align="center">
 <img src="https://github.com/user-attachments/assets/26b36d9e-5f13-434b-9c75-b68ada7edd10" alt="Aurora Logo" width="200"/>
 
+---
 
   
   [![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
